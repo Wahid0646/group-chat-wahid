@@ -1,4 +1,4 @@
-const signUp = document.getElementById("signUp");
+Fconst signUp = document.getElementById("signUp");
 const signIn = document.getElementById("signIn");
 const container = document.getElementById("container");
 const signUpBtn = document.getElementById("signUpBtn");
@@ -21,7 +21,7 @@ function login() {
   };
 
   axios
-    .post("http://localhost:4000/user/login", loginDetails)
+    .post("http://13.53.198.62:4000/user/login", loginDetails)
     .then((result) => {
       alert(result.data.message);
       localStorage.setItem("token", result.data.token);
