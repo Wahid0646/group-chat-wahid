@@ -57,6 +57,14 @@ app.use("/chat", chatRouter);
 
 app.use("/group", groupRouter);
 
+app.use((req, res, next) => {
+  if (req.url === '/favicon.ico') {
+   return res.status(204).end();
+  }
+  console.log(`Requested URL: ${req.url}`);
+  res.sendFile(path.join(__dirname, `/public/${req.url}`));
+});
+
 const job = require("./jobs/cron");
 job.start();
 
