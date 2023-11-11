@@ -19,7 +19,7 @@ io.on("connection", (socket) => {
     try {
       const group = await Group.findOne({ where: { name: groupName } });
       const messages = await Chat.findAll({
-        where: { groupid: group.dataValues.id },
+        where: { groupId: group.dataValues.id },
       });
       console.log("Request Made");
       io.emit("messages", messages);
@@ -38,8 +38,8 @@ exports.sendMessage = async (req, res, next) => {
     await Chat.create({
       name: req.user.name,
       message: req.body.message,
-      userid: req.user.id,
-      groupid: group.dataValues.id,
+      userId: req.user.id,
+      groupId: group.dataValues.id,
     });
     return res.status(200).json({ message: "Success!" });
   } catch (error) {
@@ -60,7 +60,7 @@ exports.sendMessage = async (req, res, next) => {
 //           id: {
 //             [Op.gt]: param,
 //           },
-//           groupid: group.dataValues.id,
+//           groupId: group.dataValues.id,
 //         },
 //       },
 //     });
