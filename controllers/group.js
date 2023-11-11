@@ -25,16 +25,16 @@ exports.createGroup = async (req, res, next) => {
         invitedMembers.map(async (user) => {
           const response = await UserGroup.create({
             isadmin: false,
-            userid: user.dataValues.id,
-            groupid: group.dataValues.id,
+            userId: user.dataValues.id,
+            groupId: group.dataValues.id,
           });
         })
       );
 
       await UserGroup.create({
         isadmin: true,
-        userid: req.user.id,
-        groupid: group.dataValues.id,
+        userId: req.user.id,
+        groupId: group.dataValues.id,
       });
     })();
 
@@ -53,10 +53,10 @@ exports.addToGroup = async (req, res, next) => {
     if (group) {
       const admin = await UserGroup.findOne({
         where: {
-          [Op.and]: [{ isadmin: 1 }, { groupid: group.id }],
+          [Op.and]: [{ isadmin: 1 }, { groupId: group.id }],
         },
       });
-      if (admin.userid == req.user.id) {
+      if (admin.userId == req.user.id) {
         const invitedMembers = await User.findAll({
           where: {
             email: {
@@ -69,8 +69,8 @@ exports.addToGroup = async (req, res, next) => {
           invitedMembers.map(async (user) => {
             const response = await UserGroup.create({
               isadmin: false,
-              userid: user.dataValues.id,
-              groupid: group.dataValues.id,
+              userId: user.dataValues.id,
+              groupId: group.dataValues.id,
             });
           })
         );
@@ -93,7 +93,7 @@ exports.getGroups = async (req, res, next) => {
       include: [
         {
           model: UserGroup,
-          where: { userid: req.user.id },
+          where: { userId: req.user.id },
         },
       ],
     });
@@ -112,10 +112,10 @@ exports.deleteFromGroup = async (req, res, next) => {
     if (group) {
       const admin = await UserGroup.findOne({
         where: {
-          [Op.and]: [{ isadmin: 1 }, { groupid: group.id }],
+          [Op.and]: [{ isadmin: 1 }, { groupId: group.id }],
         },
       });
-      if (admin.userid == req.user.id) {
+      if (admin.userId == req.user.id) {
         const invitedMembers = await User.findAll({
           where: {
             email: {
@@ -131,8 +131,8 @@ exports.deleteFromGroup = async (req, res, next) => {
                 [Op.and]: [
                   {
                     isadmin: false,
-                    userid: user.dataValues.id,
-                    groupid: group.dataValues.id,
+                    userId: user.dataValues.id,
+                    groupId: group.dataValues.id,
                   },
                 ],
               },
@@ -156,7 +156,7 @@ exports.groupMembers = async (req, res, next) => {
     const groupName = req.params.groupName;
     const group = await Group.findOne({ where: { name: groupName } });
     const userGroup = await UserGroup.findAll({
-      where: { groupid: group.dataValues.id },
+      where: { groupId: group.dataValues.id },
     });
 
     const users = [];
@@ -164,7 +164,7 @@ exports.groupMembers = async (req, res, next) => {
     await Promise.all(
       userGroup.map(async (user) => {
         const res = await User.findOne({
-          where: { id: user.dataValues.userid },
+          where: { id: user.dataValues.userId },
         });
         users.push(res);
       })
