@@ -7,7 +7,7 @@ const Sib = require("sib-api-v3-sdk");
 const { Op } = require("sequelize");
 
 function generateAccessToken(id, email) {
-  return jwt.sign({ userid: id, email: email }, process.env.TOKEN);
+  return jwt.sign({ userId: id, email: email }, process.env.TOKEN);
 }
 
 const getLoginPage = async (req, res, next) => {
