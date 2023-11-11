@@ -76,7 +76,7 @@ function decodeToken(token) {
 async function getMessages() {
   const token = localStorage.getItem("token");
   const decodedToken = decodeToken(token);
-  const userid = decodedToken.userid;
+  const userId = decodedToken.userId;
   const groupName = localStorage.getItem("groupName");
 
   socket.emit("getMessages", groupName);
@@ -84,7 +84,7 @@ async function getMessages() {
   socket.on("messages", (messages) => {
     chatBoxBody.innerHTML = "";
     messages.forEach((message) => {
-      if (message.userid == userid) {
+      if (message.userId == userId) {
         const div = document.createElement("div");
         chatBoxBody.appendChild(div);
 
@@ -163,7 +163,7 @@ async function getMessages() {
 //     );
 //     const token = localStorage.getItem("token");
 //     const decodedToken = decodeToken(token);
-//     const userid = decodedToken.userid;
+//     const userId = decodedToken.userId;
 //     // chatBoxBody.innerHTML = "";
 //     const chats = JSON.parse(localStorage.getItem("chats"));
 //     if (!chats) {
@@ -175,7 +175,7 @@ async function getMessages() {
 //       localStorage.setItem("chats", JSON.stringify(chats));
 //     }
 //     res.data.messages.forEach((message) => {
-//       if (message.userid == userid) {
+//       if (message.userId == userId) {
 //         const div = document.createElement("div");
 //         chatBoxBody.appendChild(div);
 
