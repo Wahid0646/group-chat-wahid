@@ -48,24 +48,24 @@ exports.sendMessage = async (req, res, next) => {
   }
 };
 
-// exports.getMessages = async (req, res, next) => {
-//   try {
-//     const param = req.query.param;
-//     const group = await Group.findOne({
-//       where: { name: req.query.groupName },
-//     });
-//     const messages = await Chat.findAll({
-//       where: {
-//         [Op.and]: {
-//           id: {
-//             [Op.gt]: param,
-//           },
-//           groupId: group.dataValues.id,
-//         },
-//       },
-//     });
-//     return res.status(200).json({ messages: messages });
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
+exports.getMessages = async (req, res, next) => {
+ try {
+   const param = req.query.param;
+   const group = await Group.findOne({
+    where: { name: req.query.groupName },
+  });
+  const messages = await Chat.findAll({
+    where: {
+     [Op.and]: {
+       id: {
+         [Op.gt]: param,
+       },
+      groupId: group.dataValues.id,
+     },
+   },
+    });
+  return res.status(200).json({ messages: messages });
+  } catch (error) {
+  console.log(error);
+ }
+};
