@@ -143,101 +143,101 @@ async function getMessages() {
   });
 }
 
-// async function getMessages() {
-//   try {
-//     const groupName = localStorage.getItem("groupName");
-//     if (!groupName || groupName == "") {
-//       return alert("Select group to get the message");
-//     }
-//     let param;
-//     const localStorageChats = JSON.parse(localStorage.getItem("chats"));
-//     if (localStorageChats && localStorageChats.length !== 0) {
-//       let array = JSON.parse(localStorage.getItem("chats"));
-//       let length = JSON.parse(localStorage.getItem("chats")).length;
-//       param = array[length - 1].id;
-//     } else {
-//       param = 0;
-//     }
-//     const res = await axios.get(
-//       `http://13.48.26.59:5000/chat/getMessages?param=${param}&groupName=${groupName}`
-//     );
-//     const token = localStorage.getItem("token");
-//     const decodedToken = decodeToken(token);
-//     const userId = decodedToken.userId;
-//     // chatBoxBody.innerHTML = "";
-//     const chats = JSON.parse(localStorage.getItem("chats"));
-//     if (!chats) {
-//       localStorage.setItem("chats", JSON.stringify(res.data.messages));
-//     } else {
-//       res.data.messages.forEach((message) => {
-//         chats.push(message);
-//       });
-//       localStorage.setItem("chats", JSON.stringify(chats));
-//     }
-//     res.data.messages.forEach((message) => {
-//       if (message.userId == userId) {
-//         const div = document.createElement("div");
-//         chatBoxBody.appendChild(div);
+async function getMessages() {
+ try {
+   const groupName = localStorage.getItem("groupName");
+    if (!groupName || groupName == "") {
+    return alert("Select group to get the message");
+    }
+  let param;
+  const localStorageChats = JSON.parse(localStorage.getItem("chats"));
+  if (localStorageChats && localStorageChats.length !== 0) {
+    let array = JSON.parse(localStorage.getItem("chats"));
+    let length = JSON.parse(localStorage.getItem("chats")).length;
+    param = array[length - 1].id;
+   } else {
+    param = 0;
+  }
+  const res = await axios.get(
+     `http://13.48.26.59:5000/chat/getMessages?param=${param}&groupName=${groupName}`
+  );
+   const token = localStorage.getItem("token");
+   const decodedToken = decodeToken(token);
+   const userId = decodedToken.userId;
+   chatBoxBody.innerHTML = "";
+  const chats = JSON.parse(localStorage.getItem("chats"));
+   if (!chats) {
+    localStorage.setItem("chats", JSON.stringify(res.data.messages));
+   } else {
+    res.data.messages.forEach((message) => {
+      chats.push(message);
+     });
+    localStorage.setItem("chats", JSON.stringify(chats));
+   }
+    res.data.messages.forEach((message) => {
+      if (message.userId == userId) {
+       const div = document.createElement("div");
+      chatBoxBody.appendChild(div);
 
-//         const messageSendby = document.createElement("span");
-//         messageSendby.classList.add(
-//           "d-flex",
-//           "justify-content-end",
-//           "px-3",
-//           "mb-1",
-//           "text-uppercase",
-//           "small",
-//           "text-white"
-//         );
-//         messageSendby.appendChild(document.createTextNode("You"));
-//         div.appendChild(messageSendby);
+     const messageSendby = document.createElement("span");
+      messageSendby.classList.add(
+       "d-flex",
+     "justify-content-end",
+      "px-3",
+     "mb-1",
+     "text-uppercase",
+      "small",
+      "text-white"
+      );
+     messageSendby.appendChild(document.createTextNode("You"));
+      div.appendChild(messageSendby);
 
-//         const messageBox = document.createElement("div");
-//         const messageText = document.createElement("div");
+      const messageBox = document.createElement("div");
+      const messageText = document.createElement("div");
 
-//         messageBox.classList.add("d-flex", "justify-content-end", "mb-4");
+     messageBox.classList.add("d-flex", "justify-content-end", "mb-4");
 
-//         messageText.classList.add("msg_cotainer_send");
-//         messageText.appendChild(document.createTextNode(message.message));
+     messageText.classList.add("msg_cotainer_send");
+     messageText.appendChild(document.createTextNode(message.message));
 
-//         messageBox.appendChild(messageText);
-//         div.appendChild(messageBox);
-//       } else {
-//         const div = document.createElement("div");
-//         chatBoxBody.appendChild(div);
+     messageBox.appendChild(messageText);
+     div.appendChild(messageBox);
+     } else {
+     const div = document.createElement("div");
+     chatBoxBody.appendChild(div);
 
-//         const messageSendby = document.createElement("span");
-//         messageSendby.classList.add(
-//           "d-flex",
-//           "justify-content-start",
-//           "px-3",
-//           "mb-1",
-//           "text-uppercase",
-//           "small",
-//           "text-white"
-//         );
-//         messageSendby.appendChild(document.createTextNode(message.name));
-//         div.appendChild(messageSendby);
+    const messageSendby = document.createElement("span");
+     messageSendby.classList.add(
+      "d-flex",
+     "justify-content-start",
+      "px-3",
+      "mb-1",
+      "text-uppercase",
+      "small",
+      "text-white"
+     );
+     messageSendby.appendChild(document.createTextNode(message.name));
+    div.appendChild(messageSendby);
 
-//         const messageBox = document.createElement("div");
-//         const messageText = document.createElement("div");
+     const messageBox = document.createElement("div");
+     const messageText = document.createElement("div");
 
-//         messageBox.classList.add("d-flex", "justify-content-start", "mb-4");
+    messageBox.classList.add("d-flex", "justify-content-start", "mb-4");
 
-//         messageText.classList.add("msg_cotainer");
-//         messageText.appendChild(document.createTextNode(message.message));
+    messageText.classList.add("msg_cotainer");
+     messageText.appendChild(document.createTextNode(message.message));
 
-//         messageBox.appendChild(messageText);
-//         div.appendChild(messageBox);
-//       }
-//     });
-//   } catch (error) {
-//     console.log(error);
-//   }
-// }
+    messageBox.appendChild(messageText);
+     div.appendChild(messageBox);
+    }
+  });
+  } catch (error) {
+   console.log(error);
+  }
+ }
 
 messageSendBtn.addEventListener("click", messageSend);
-// document.addEventListener("DOMContentLoaded", getMessagesFromLocalStorage);
+document.addEventListener("DOMContentLoaded", getMessagesFromLocalStorage);
 uiGroup.addEventListener("click", activeGroup);
 document.addEventListener("DOMContentLoaded", () => {
   localStorage.setItem("groupName", "");
